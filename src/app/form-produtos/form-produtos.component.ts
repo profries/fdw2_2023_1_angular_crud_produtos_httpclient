@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Produto } from '../produto';
+import { ProdutoApiService } from '../produto-api.service';
 import { ProdutoService } from '../produto.service';
 
 @Component({
@@ -15,24 +16,30 @@ export class FormProdutosComponent implements OnInit{
   botaoAcao?: string;
   constructor(
     private produtoService: ProdutoService,
+    private produtoApiService: ProdutoApiService,
     private router: Router,
     private route: ActivatedRoute) {    
   }
 
   ngOnInit(): void {
     this.botaoAcao = "Cadastrar";
-    this.id = +this.route.snapshot.params['id'];
+    this.id = this.route.snapshot.params['id'];
     if(this.id) {
       this.botaoAcao = "Editar";
-      this.produto = this.produtoService.buscarPorId(this.id);
+      this.produtoApiService.buscarPorId(this.id).subscribe(produto => {
+        this.produto = produto;
+        console.log(this.produto);  
+      });
     }
   }
 
   salvar() {
     if(!this.id) {
-      this.produtoService.inserir(this.produto);
-      this.produto = new Produto();
-      alert("Cadastro realizado com sucesso!")
+      this.produtoApiService.inserir(this.produto).subscribe(produtoI => {
+        console.log('Produto Cadastrado', produtoI);
+        this.produto = new Produto();
+        alert("Cadastro realizado com sucesso!")  
+      });
     }
     else {
       this.produtoService.editar(this.id, this.produto);      
