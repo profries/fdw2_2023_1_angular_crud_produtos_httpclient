@@ -6,11 +6,11 @@ import { Produto } from './produto';
 })
 export class ProdutoService {
   listaProdutos: Produto[] = [
-    { _id:1, nome: "Produto 1", preco: 100},
-    { _id:2, nome: "Prod 2", preco: 200},
-    { _id:3, nome: "Produto 3", preco: 300},
-    { _id:4, nome: "Prod 4", preco: 400},
-    { _id:5, nome: "Produto 5", preco: 500}
+    { _id:'1', nome: "Produto 1", preco: 100},
+    { _id:'2', nome: "Prod 2", preco: 200},
+    { _id:'3', nome: "Produto 3", preco: 300},
+    { _id:'4', nome: "Prod 4", preco: 400},
+    { _id:'5', nome: "Produto 5", preco: 500}
   ];
   constructor() { }
 
@@ -23,26 +23,26 @@ export class ProdutoService {
   }
 
 
-  buscarPorId(id: number): Produto {
+  buscarPorId(id: string): Produto {
     const produto =  this.listaProdutos.find(produto => produto._id == id)
     return produto 
             ? Object.assign({}, produto)
             :new Produto();
   }
 
-  editar(id: number, produto: Produto) {
+  editar(id: string, produto: Produto) {
     const indice = this.getIndice(id);
     if(indice >=0)
       this.listaProdutos[indice] = produto;
   }
 
-  deletar(id?: number) {
+  deletar(id?: string) {
     const indice = this.getIndice(id);
     if( indice >=0)
       this.listaProdutos.splice(indice, 1);
   }
   
-  private getIndice(id?: number) {
+  private getIndice(id?: string) {
     return this.listaProdutos.findIndex(produto => produto._id == id)
   }
 

@@ -15,17 +15,22 @@ export class TabelaProdutosComponent {
   listaProdutos: Produto[] = [];
 
   constructor(
-      private produtoService: ProdutoService, 
       private produtoApiService: ProdutoApiService
   ) {
-    //this.listaProdutos = this.produtoService.listar(); 
+      this.listar();
+  }
+  
+  listar() {
     this.produtoApiService.listar().subscribe(
       produtos => this.listaProdutos = produtos
     );
   }
 
-  deletar(id?: number) {
-    this.produtoService.deletar(id);
+  deletar(id?: string) {    
+    this.produtoApiService.deletar(id!).subscribe(produto => {
+      console.log('Produto deletado', produto);
+      this.listar();
+    });
   }
 
 }

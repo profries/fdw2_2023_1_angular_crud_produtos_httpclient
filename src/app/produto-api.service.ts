@@ -20,12 +20,23 @@ export class ProdutoApiService {
     return this.http.get<Produto[]>(this.baseApi);
   }
 
-  buscarPorId(id: number): Observable<Produto> {
+  buscarPorId(id: string): Observable<Produto> {
     const uri = `${this.baseApi}/${id}`;    
     return this.http.get<Produto>(uri);
   }
 
   inserir(produto: Produto): Observable<Produto> {
     return this.http.post(this.baseApi, produto, httpOptions);
+  }
+
+  editar(id: string, produto: Produto): Observable<Produto> {
+    const uri = `${this.baseApi}/${id}`; 
+    return this.http.put(uri, produto, httpOptions);  
+  }
+
+  deletar(id: string): Observable<Produto> {
+    const uri = `${this.baseApi}/${id}`;    
+    return this.http.delete<Produto>(uri);
+    
   }
 }

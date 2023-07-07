@@ -12,10 +12,9 @@ import { ProdutoService } from '../produto.service';
 export class FormProdutosComponent implements OnInit{
   @Input() titulo = "Formulário de Produtos";
   produto = new Produto();
-  id!: number;
+  id!: string;
   botaoAcao?: string;
   constructor(
-    private produtoService: ProdutoService,
     private produtoApiService: ProdutoApiService,
     private router: Router,
     private route: ActivatedRoute) {    
@@ -42,8 +41,10 @@ export class FormProdutosComponent implements OnInit{
       });
     }
     else {
-      this.produtoService.editar(this.id, this.produto);      
-      alert("Edicao realizado com sucesso!")
+      this.produtoApiService.editar(this.id, this.produto).subscribe(prod => {              
+        this.produto = prod;
+        alert("Edicao realizado com sucesso!");     
+      });      
     }
   }
   cancelar() {
