@@ -1,0 +1,18 @@
+<h3>{{titulo}}</h3>
+
+<div>
+    <label for="id">ID:</label>
+    <input [(ngModel)]= "produto._id" id="id">
+    <br />
+
+    <label for="nome">NOME:</label>
+    <input [(ngModel)]= "produto.nome" d="nome">
+    <br />
+
+    <label for="preco">PRECO:</label>
+    <input type="number" [(ngModel)]= "produto.preco" id="preco">
+    <br />
+
+    <button (click)="salvar()">{{botaoAcao}}</button>
+    <button (click)="cancelar()">Cancelar</button>
+</div>
